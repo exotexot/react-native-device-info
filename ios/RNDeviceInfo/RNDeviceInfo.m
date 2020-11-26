@@ -22,13 +22,14 @@
 #endif
 
 typedef NS_ENUM(NSInteger, DeviceType) {
+    DeviceTypeDesktop,
     DeviceTypeHandset,
     DeviceTypeTablet,
     DeviceTypeTv,
     DeviceTypeUnknown
 };
 
-#define DeviceTypeValues [NSArray arrayWithObjects: @"Handset", @"Tablet", @"Tv", @"unknown", nil]
+#define DeviceTypeValues [NSArray arrayWithObjects: @"Desktop", @"Handset", @"Tablet", @"Tv", @"unknown", nil]
 
 #if !(TARGET_OS_TV)
 @import CoreTelephony;
@@ -110,7 +111,8 @@ RCT_EXPORT_MODULE();
 {
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
         case UIUserInterfaceIdiomPhone: return DeviceTypeHandset;
-        case UIUserInterfaceIdiomPad: return DeviceTypeTablet;
+        case UIUserInterfaceIdiomPad: return TARGET_OS_MACCATALYST ? DeviceTypeDesktop : DeviceTypeTablet;
+        case UIUserInterfaceIdiomMac: return DeviceTypeDesktop;
         case UIUserInterfaceIdiomTV: return DeviceTypeTv;
         default: return DeviceTypeUnknown;
     }
