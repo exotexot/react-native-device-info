@@ -578,7 +578,6 @@ export const getDeviceType = () => {
     defaultValue: 'unknown',
     getter: () => RNDeviceInfo.deviceType,
   });
-
 }
 
 export const getDeviceTypeSync = () => {
